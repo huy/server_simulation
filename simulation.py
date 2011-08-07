@@ -7,6 +7,7 @@ class WaitTimeSimulator:
 
   def __init__(self,
     number_of_servers,
+    request_type_capacity,
     request_type_distribution,
     request_type_mean_time,
     arrival_rate):
@@ -17,7 +18,7 @@ class WaitTimeSimulator:
       request_type_mean_time,
       arrival_rate)
 
-    self.servers = [Server([20/number_of_servers,600/number_of_servers]) 
+    self.servers = [Server([capacity/number_of_servers for capacity in request_type_capacity]) 
       for z in range(number_of_servers)]
   
   def simulate(self,max_observed_requests):
@@ -65,6 +66,7 @@ if __name__ == "__main__":
 
   simulator = WaitTimeSimulator(
     number_of_servers=number_of_servers,
+    request_type_capacity=[20,600],
     request_type_distribution=[0.05, 0.95],
     request_type_mean_time=[4.5, 1.15],
     arrival_rate=30.0)
