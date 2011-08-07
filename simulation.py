@@ -18,9 +18,28 @@ class WaitTimeSimulator:
       request_type_mean_time,
       arrival_rate)
 
-    self.servers = [Server([capacity/number_of_servers for capacity in request_type_capacity]) 
-      for z in range(number_of_servers)]
+    server_capacity = self.distribute_server_capacity(number_of_servers,request_type_capacity)
+     
+    print "server capacity:", server_capacity
+
+    self.servers = [Server(server_capacity[z]) for z in range(number_of_servers)]
   
+  def distribute_server_capacity(self,number_of_servers,request_type_capacity):
+    server_capacity = [[0 for z in range(self.number_request_types)]
+      for server in range(number_of_servers)]
+
+    for z in range(self.number_request_types):
+      #print "request type:",z,",capacity:",request_type_capacity[z]
+      while (request_type_capacity[z]>0):
+        for server in range(number_of_servers):
+          if request_type_capacity[z] <= 0:
+            break
+          server_capacity[server][z]+=1
+          request_type_capacity[z]-=1
+
+    return server_capacity
+        
+
   def simulate(self,max_observed_requests):
     arrival_time = 0
     while True:     
