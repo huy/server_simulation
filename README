@@ -1,0 +1,29 @@
+# Server simulation
+
+This is simple Monte Carlo simulation of the behaviour of multi servers 
+behind round robin load balancer under load.
+
+In the model, there is fixed output capacity per each type of requests and
+we can play with different number of servers to calculate total wait time for
+each type of requests.
+
+## Stochastic process assumptions
+
+* requests arrive at the system with length of inter-arrival times following http://en.wikipedia.org/wiki/Exponential_distribution
+* service time per request type follows http://en.wikipedia.org/wiki/Normal_distribution
+ 
+## Requirements
+
+* python version >= 2.4 
+* numpy and scipy python libaries
+
+## Running
+
+python simulation.py 10 500000
+
+where
+
+* 10 is number of servers
+* 500000 is number of observed requests
+
+ 
