@@ -7,17 +7,45 @@ In the model, there is fixed output capacity per each type of requests and
 we can play with different number of servers to calculate total wait time for
 each type of requests.
 
-## Stochastic process assumptions
+## Stochastic process 
 
-* requests arrive at the system with length of inter-arrival times following http://en.wikipedia.org/wiki/Exponential_distribution
-* service time per request type follows http://en.wikipedia.org/wiki/Normal_distribution
+* requests arrive at the system with length of inter-arrival time as random number 
+distributed according http://en.wikipedia.org/wiki/Exponential_distribution
+* service time of each request (per request type) is a random number distributed 
+according http://en.wikipedia.org/wiki/Normal_distribution
  
+## Model's parameters
+ 
+**request_type_distribution**
+
+An array of probability for each type of requests, sum must yield 1.0. 
+
+e.g. [0.5,0.5] decribes two types of requests, each has probability of 50%.
+
+**request_type_mean_time**
+
+An array of mean time (expected value i.e. most of requests takes this time to complete) 
+for each type of requests, must have same length as request_type_distribution.
+
+e.g. [2.5,0.75] describes the average service time of first type of requests is 2.5 second
+and of second type is 750 ms.
+
+**std_service_time_variance**
+
+This decribe a degree the service time spreads from mean time, it is fixed to 1.0
+
+**arrival_rate**
+
+Expected number of requests per second.
+
+e.g. 30 means 30 requests per second
+
 ## Requirements
 
 * python version >= 2.4 
 * numpy and scipy python libaries
 
-## Running
+## Example
 
 python simulation.py 10 500000
 
