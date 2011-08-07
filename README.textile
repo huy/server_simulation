@@ -3,11 +3,14 @@ h1. Server simulation
 This is simple Monte Carlo simulation of the behaviour of multi servers 
 behind round robin load balancer under load.
 
-In the model, there is fixed output capacity per each type of requests and
+In the model, there is fixed output capacity per each type of requests for us
 we can play with different number of servers to calculate total wait time for
 each type of requests.
 
 h2. Stochastic process 
+
+The generator will generate a request as tuple of (request_type,inter_arrival_time,service_time)
+satisfying the following constraints
 
 * requests arrive at the system with length of inter-arrival time as random number 
 distributed according http://en.wikipedia.org/wiki/Exponential_distribution
