@@ -71,7 +71,6 @@ class WaitTimeSimulator:
      
 if __name__ == "__main__":
   from sys import argv,exit,stderr
-  from os.path import exists 
   
   if len(argv) < 2:
     number_of_servers = 6
