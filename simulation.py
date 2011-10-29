@@ -84,7 +84,7 @@ if __name__ == "__main__":
 
   simulator = WaitTimeSimulator(
     number_of_servers=number_of_servers,
-    request_type_capacity=[20,600],
+    request_type_capacity=[20,100],
     request_type_distribution=[0.05, 0.95],
     request_type_mean_time=[4.5, 1.15],
     arrival_rate=30.0)
