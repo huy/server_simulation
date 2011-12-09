@@ -1,4 +1,3 @@
-import numpy
 import scipy.stats
 from collections import deque
 

@@ -1,0 +1,12 @@
+number_of_servers: 6
+number_request_per_sec: 30
+number_of_requests: 50000
+types_of_requests:
+  dma:
+    output_capacity: 20
+    proportion: 0.05 
+    avg_service_time_secs: 4.5
+  other:
+    output_capacity: 100
+    proportion: 0.95 
+    avg_service_time_secs: 1.15
