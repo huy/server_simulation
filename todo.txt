@@ -1,0 +1,6 @@
+1. extract LoadBalacer logic to separate class
+2. add test for each important methods
+3. can submit model parameters as yaml file
+4. add real world examples
+5. draw some graph
+
