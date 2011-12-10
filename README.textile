@@ -3,7 +3,7 @@ h1. Server simulation
 h2. Overview 
 
 This is simple Monte Carlo simulation of the behaviour of multi servers 
-behind dump round robin loadbalancer.
+behind round robin loadbalancer.
 
 In the model, requests are divided into different types according to a type of resource they access
 .There is limited output capacity for each type of resource, which is distributed equaly to all servers. 
