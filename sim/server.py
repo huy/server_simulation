@@ -6,6 +6,9 @@ class Server:
       self.channels.append([0 for z in range(n)])
     self.total_wait_time = [0 for z in range(len(capacity_per_request_type))]
 
+  def output_capacity(self):
+    return [len(x) for x in self.channels]    
+
   def process(self,request_type,arrival_time,service_time):
     self.total_requests += 1
 

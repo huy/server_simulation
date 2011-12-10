@@ -2,12 +2,17 @@ from server import Server
 
 class LoadBalancer:
 
-  def __init__(self,
-    servers)
+  def __init__(self,servers):
     self.servers = servers
     self.arrival_time = 0
 
-  def process(req):
+  def number_of_servers(self):
+    return len(self.servers)
+
+  def server(self,index):
+    return self.servers[index]
+
+  def process(self,req):
     request_type,delay,service_time = req
     self.arrival_time = self.arrival_time + delay
     self.find_available_server().process(request_type,self.arrival_time,service_time)

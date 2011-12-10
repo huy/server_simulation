@@ -7,6 +7,6 @@ types_of_requests:
     proportion: 0.05 
     avg_service_time_secs: 4.5
   other:
-    output_capacity: 100
+    output_capacity: 60
     proportion: 0.95 
     avg_service_time_secs: 1.15
