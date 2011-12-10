@@ -22,9 +22,9 @@ The generator of the simulation will generate a request as tuple of (request_typ
 satisfying the following constraints
 
 * requests arrive at the system with length of inter-arrival time as random number 
-distributed according "exponential distribution":http://en.wikipedia.org/wiki/Exponential_distribution
+distributed according "Exponential Distribution":http://en.wikipedia.org/wiki/Exponential_distribution
 * service time of each request is a random number distributed 
-according "normal distribution":http://en.wikipedia.org/wiki/Normal_distribution
+according "Normal Distribution":http://en.wikipedia.org/wiki/Normal_distribution
  
 h2. Model's parameters
  
@@ -76,7 +76,7 @@ e.g. 30 means 30 requests per second
 h2. Requirements
 
 * python version >= 2.4 
-* numpy and scipy python libaries
+* "numpy":http://numpy.scipy.org/ and "scipy":http://numpy.scipy.org/ python libaries
 
 h2. Run it
 
