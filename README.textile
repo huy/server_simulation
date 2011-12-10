@@ -57,7 +57,13 @@ h2. Requirements
 * python version >= 2.4 
 * numpy and scipy python libaries
 
-h2. Example
+h2. Runit
+
+**Test**
+
+bc. python -m tests.sim_tests
+
+**Program**
 
 bc. python sim/simulation.py tests/sample1.yml
 
