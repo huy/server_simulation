@@ -50,35 +50,47 @@ class TestServer(unittest.TestCase):
 
 class TestGenerator(unittest.TestCase):
   def test_generate_request(self):
-    generator = RequestGenerator([0.05,0.95],[2.5,0.75],30)
+    generator = RequestGenerator(
+     {"dma": {
+        "proportion": 0.05,
+        "avg_service_time_secs": 2.5,
+        "deviation_service_time_secs": 0.75
+       }, 
+      "other": {
+        "proportion": 0.95,
+        "avg_service_time_secs": 0.75,
+        "deviation_service_time_secs": 0.25
+       }
+     },
+     30)
       
     num_type1,num_type2 = 0.0,0.0
     total_time = 0.0
     
     num_type2_closed_to_mean = 0.0
-    delta = 0.3
+    variance = 0.3
 
     for type,arrival_time,service_time in generator.generate(10000):
       if type==0:
         num_type1+=1
       else:
         num_type2+=1
-        if service_time > 0.75 - delta and service_time < 0.75 + delta:
+        if service_time > 0.75 - variance and service_time < 0.75 + variance:
           num_type2_closed_to_mean+=1
 
       total_time+=arrival_time
 
     # assert below may fail but very unlikely, this is to make sure that generator 
     # do the good job
-    self.assertTrue(num_type1>5) 
-    self.assertTrue(num_type2>9000)
+    self.assertTrue(num_type1>5,"number of type1's requests: %f <= 5" % num_type1) 
+    self.assertTrue(num_type2>9000,"number of type2's requests: %f <= 9000" % num_type2)
 
     actual_rate = 10000/total_time
     self.assertTrue(actual_rate>25)
     self.assertTrue(actual_rate<35)
 
-    print num_type2_closed_to_mean,num_type2
-    self.assertTrue((num_type2_closed_to_mean/num_type2) > 0.5)
+    pct = (num_type2_closed_to_mean/num_type2)
+    self.assertTrue(pct > 0.7, "percentage of type2 requests with variance %f sec(s): %f <= 0.7" % (variance,pct) )
 
 if __name__ == '__main__':
     unittest.main()

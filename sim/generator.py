@@ -3,17 +3,20 @@ from collections import deque
 
 class RequestGenerator:
   def __init__(self,
-    request_type_distribution,
-    request_type_mean_time,
+    types_of_requests,
     arrival_rate):
 
-    self.number_request_types = len(request_type_distribution)
+    request_type_distribution=[x["proportion"] for x in types_of_requests.values()]
+    request_type_mean=[x["avg_service_time_secs"] for x in types_of_requests.values()]
+    request_type_std_deviation=[x["deviation_service_time_secs"] for x in types_of_requests.values()]
+
+    self.number_request_types = len(types_of_requests)
     self.arrival_time = 0
 
     self.discrete_dist = scipy.stats.rv_discrete(name="discrete",
       values=(range(self.number_request_types),request_type_distribution))
     self.exponential_dist = scipy.stats.expon(scale=1.0/arrival_rate)
-    self.norm_dists = [scipy.stats.norm(loc=request_type_mean_time[z],scale=request_type_mean_time[z]/2) for z
+    self.norm_dists = [scipy.stats.norm(loc=request_type_mean[z],scale=request_type_std_deviation[z]) for z
       in range(self.number_request_types)]
 
     self.cache_service_time = {}

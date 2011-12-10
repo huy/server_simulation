@@ -6,19 +6,16 @@ class Simulator:
 
   def __init__(self,params):
     number_of_servers=params["number_of_servers"]
-    type_capacity=[x["output_capacity"] for x in params["types_of_requests"].values()]
-    type_distribution=[x["proportion"] for x in params["types_of_requests"].values()]
-    type_mean_time=[x["avg_service_time_secs"] for x in params["types_of_requests"].values()]
 
-    self.number_request_per_sec=params["number_request_per_sec"]
+    self.number_request_per_sec = params["number_request_per_sec"]
     self.number_of_requests = params["number_of_requests"]
-    self.number_of_types = len(type_distribution)
+    self.number_of_types = len(params["types_of_requests"])
 
-    self.generator = RequestGenerator(type_distribution,
-      type_mean_time,
+    self.generator = RequestGenerator(params["types_of_requests"],
       self.number_request_per_sec)
 
-    server_capacity = self.distribute_output_capacity(number_of_servers,type_capacity)
+    request_type_capacity=[x["output_capacity"] for x in params["types_of_requests"].values()]
+    server_capacity = self.distribute_output_capacity(number_of_servers,request_type_capacity)
      
     #print "server capacity:", server_capacity
 
