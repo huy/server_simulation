@@ -1,15 +1,24 @@
 h1. Server simulation
 
-This is simple Monte Carlo simulation of the behaviour of multi servers 
-behind round robin load balancer under load.
+h2. Overview 
 
-In the model, there is fixed output capacity per each type of requests for us
-we can play with different number of servers to calculate total wait time for
-each type of requests.
+This is simple Monte Carlo simulation of the behaviour of multi servers 
+behind dump round robin loadbalancer.
+
+In the model, requests are divided into different types according to a type of resource they access
+.There is limited output capacity for each type of resource, which is distributed equaly to all servers. 
+
+Requests come to the loadbalancer randomly at specific rate. The loadbalancer elect one of server to
+forward the request regardless of type of resource required to complete the request.
+
+A request take a time to complete during this short period it occupies the resource if all resources of
+the servers are occupied then next incomming request has to wait until one resource of these resources become available.
+
+The objective is to calculate total wait time of requests as well as % of requests that has to wait for resource' availability.
 
 h2. Stochastic process 
 
-The generator will generate a request as tuple of (request_type,inter_arrival_time,service_time)
+The generator of the simulation will generate a request as tuple of (request_type,inter_arrival_time,service_time)
 satisfying the following constraints
 
 * requests arrive at the system with length of inter-arrival time as random number 
@@ -50,11 +59,20 @@ h2. Requirements
 
 h2. Example
 
-python simulation.py 10 500000
+python simulation.py sample1.yml
 
-where
+where sample1.yml is file of parameters for simulation
 
-* 10 is number of servers
-* 500000 is number of observed requests
-
- 
+    number_of_servers: 6
+    number_request_per_sec: 30
+    number_of_requests: 50000
+    types_of_requests:
+      dma:
+        output_capacity: 20
+        proportion: 0.05 
+        avg_service_time_secs: 4.5
+      other:
+        output_capacity: 60
+        proportion: 0.95 
+        avg_service_time_secs: 1.15
+     
