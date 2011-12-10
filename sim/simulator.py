@@ -53,7 +53,7 @@ if __name__ == "__main__":
   import yaml
   
   if len(argv) < 2:
-    print >> stderr,"Usage:\n\t%s parameters-file",argv[0] 
+    print >> stderr,"Usage:\n\t%s parameters-file" % argv[0] 
     exit(1)
 
   script,filename=argv

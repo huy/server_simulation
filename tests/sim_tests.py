@@ -21,9 +21,9 @@ class TestLoadParameters(unittest.TestCase):
   def test_distribute_output_capacity(self):
     self.assertEqual([20,60],self.lb.output_capacities())
 
-    for serverno in [0,1]:
+    for serverno in (0,1):
       self.assertEqual([4,10],self.lb.server(serverno).output_capacities())
-    for serverno in [2,3,4,5]:
+    for serverno in (2,3,4,5):
       self.assertEqual([3,10],self.lb.server(serverno).output_capacities())
 
 class TestLoadBalancer(unittest.TestCase):
@@ -91,6 +91,9 @@ class TestGenerator(unittest.TestCase):
 
     pct = (num_type2_closed_to_mean/num_type2)
     self.assertTrue(pct > 0.7, "percentage of type2 requests with variance %f sec(s): %f <= 0.7" % (variance,pct) )
+
+class TestSimulator(unittest.TestCase):
+  pass
 
 if __name__ == '__main__':
     unittest.main()
