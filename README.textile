@@ -63,9 +63,7 @@ python simulation.py sample1.yml
 
 where sample1.yml is file of parameters for simulation
 
-bc..
-
-number_of_servers: 6
+bc. number_of_servers: 6
 number_request_per_sec: 30
 number_of_requests: 50000
     types_of_requests:
