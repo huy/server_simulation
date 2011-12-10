@@ -62,10 +62,10 @@ h2. Example
 python simulation.py sample1.yml
 
 where sample1.yml is file of parameters for simulation
-@
-    number_of_servers: 6
-    number_request_per_sec: 30
-    number_of_requests: 50000
+
+@number_of_servers: 6
+number_request_per_sec: 30
+number_of_requests: 50000
     types_of_requests:
       dma:
         output_capacity: 20
@@ -74,5 +74,4 @@ where sample1.yml is file of parameters for simulation
       other:
         output_capacity: 60
         proportion: 0.95 
-        avg_service_time_secs: 1.15
-@     
+        avg_service_time_secs: 1.15@     
