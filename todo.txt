@@ -1,6 +1,6 @@
-1. extract LoadBalacer logic to separate class
+1. extract LoadBalacer logic to separate class => done
 2. add test for each important methods
-3. can submit model parameters as yaml file
+3. can submit model parameters as yaml file => done
 4. add real world examples
 5. draw some graph
 

@@ -15,9 +15,9 @@ class LoadBalancer:
   def process(self,req):
     request_type,delay,service_time = req
     self.arrival_time = self.arrival_time + delay
-    self.find_available_server().process(request_type,self.arrival_time,service_time)
+    self.elect_server().process(request_type,self.arrival_time,service_time)
 
-  def find_available_server(self):
+  def elect_server(self):
     server,min = self.servers[0],self.servers[0].total_requests
     for z in self.servers:
       if z.total_requests < min:
@@ -25,6 +25,16 @@ class LoadBalancer:
         server = z
     return server
   
+  def output_capacities(self):
+    result=[]
+    for server in self.servers:
+      for type, val in enumerate(server.output_capacities()):
+        if type < len(result):
+           result[type]+=val
+        else:
+           result.append(val)
+    return result
+
   def total_requests(self):
     result = sum([z.total_requests for z in self.servers])
     return result

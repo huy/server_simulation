@@ -9,14 +9,14 @@ class Simulator:
     request_type_capacity=[x["output_capacity"] for x in params["types_of_requests"].values()]
     request_type_distribution=[x["proportion"] for x in params["types_of_requests"].values()]
     request_type_mean_time=[x["avg_service_time_secs"] for x in params["types_of_requests"].values()]
-    arrival_rate=params["number_request_per_sec"]
 
+    self.number_request_per_sec=params["number_request_per_sec"]
     self.number_of_requests = params["number_of_requests"]
     self.number_request_types = len(request_type_distribution)
 
     self.generator = RequestGenerator(request_type_distribution,
       request_type_mean_time,
-      arrival_rate)
+      self.number_request_per_sec)
 
     server_capacity = self.distribute_output_capacity(number_of_servers,request_type_capacity)
      

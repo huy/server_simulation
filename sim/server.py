@@ -1,12 +1,12 @@
 class Server:
-  def __init__(self, capacity_per_request_type):
+  def __init__(self, output_capacities):
     self.total_requests = 0
     self.channels = []
-    for n in capacity_per_request_type:
+    for n in output_capacities:
       self.channels.append([0 for z in range(n)])
-    self.total_wait_time = [0 for z in range(len(capacity_per_request_type))]
+    self.total_wait_time = [0 for z in range(len(output_capacities))]
 
-  def output_capacity(self):
+  def output_capacities(self):
     return [len(x) for x in self.channels]    
 
   def process(self,request_type,arrival_time,service_time):
