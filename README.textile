@@ -30,8 +30,7 @@ h2. Model's parameters
  
 Example of parameter's file
 
-bc.
-number_of_servers: 6
+bc. number_of_servers: 6
 number_request_per_sec: 30
 number_of_requests: 50000
     types_of_requests:
@@ -46,7 +45,7 @@ number_of_requests: 50000
         avg_service_time_secs: 1.15
         deviation_service_time_secs: 0.25
 
-The following parameters from the file will be used to drive generator of requests
+p. The following parameters from the file will be used to drive generator of requests
 
 **request_type_distribution**
 
