@@ -39,13 +39,21 @@ class Simulator:
   def total_wait_time(self):
     return self.loadbalancer.total_wait_time()
 
+  def total_wait_requests(self):
+    return self.loadbalancer.total_wait_requests()
+
+  def total_requests(self):
+    return self.loadbalancer.total_requests()
+
   def simulate(self):
     arrival_time = 0
+    reqno = 0
     while True:     
        for req in self.generator.generate(number_of_requests=100):
+         reqno += 1
          self.loadbalancer.process(req)
 
-       if  self.loadbalancer.total_requests()>=self.number_of_requests:
+       if  reqno >=self.number_of_requests:
           break
   
 if __name__ == "__main__":
@@ -65,6 +73,8 @@ if __name__ == "__main__":
 
   simulator.simulate()
 
+  print "requests:",simulator.total_requests(),[float(x)/simulator.number_of_requests for x in simulator.total_requests()]
+  print "wait requests:",simulator.total_wait_requests(),[float(x[0])/x[1] for x in zip(simulator.total_wait_requests(),simulator.total_requests()) ]
   print "wait time:",simulator.total_wait_time()
 
   exit(0)

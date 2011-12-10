@@ -36,7 +36,13 @@ class LoadBalancer:
     return result
 
   def total_requests(self):
-    result = sum([z.total_requests for z in self.servers])
+    result=[]
+    for server in self.servers:
+      for type, val in enumerate(server.total_requests):
+        if type < len(result):
+           result[type]+=val
+        else:
+           result.append(val)
     return result
 
   def total_wait_time(self):
@@ -48,3 +54,14 @@ class LoadBalancer:
         else:
            result.append(val)
     return result
+
+  def total_wait_requests(self):
+    result=[]
+    for server in self.servers:
+      for type, val in enumerate(server.total_wait_requests):
+        if type < len(result):
+           result[type]+=val
+        else:
+           result.append(val)
+    return result
+
