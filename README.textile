@@ -16,7 +16,7 @@ a server are occupied then next incomming request to this server has to wait unt
 
 The objective is to calculate total wait time of requests as well as % of requests that has to wait for resource' availability.
 
-h2. Stochastic process 
+h2. Generator of requests
 
 The generator of the simulation will generate a request as tuple of (request_type,inter_arrival_time,service_time)
 satisfying the following constraints
@@ -26,7 +26,7 @@ distributed according "Exponential Distribution":http://en.wikipedia.org/wiki/Ex
 * service time of each request is a random number distributed 
 according "Normal Distribution":http://en.wikipedia.org/wiki/Normal_distribution
  
-h2. Model's parameters
+h3. Parameters
  
 Example of parameter's file
 
