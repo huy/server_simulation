@@ -35,33 +35,22 @@ class LoadBalancer:
            result.append(val)
     return result
 
-  def total_requests(self):
+  def calculate_req_stats(self,attr):
     result=[]
     for server in self.servers:
-      for type, val in enumerate(server.total_requests):
+      for type, val in enumerate(getattr(server,attr)):
         if type < len(result):
            result[type]+=val
         else:
            result.append(val)
     return result
+
+  def total_requests(self):
+    return self.calculate_req_stats("total_requests")
 
   def total_wait_time(self):
-    result=[]
-    for server in self.servers:
-      for type, val in enumerate(server.total_wait_time):
-        if type < len(result):
-           result[type]+=val
-        else:
-           result.append(val)
-    return result
+    return self.calculate_req_stats("total_wait_time")
 
   def total_wait_requests(self):
-    result=[]
-    for server in self.servers:
-      for type, val in enumerate(server.total_wait_requests):
-        if type < len(result):
-           result[type]+=val
-        else:
-           result.append(val)
-    return result
+    return self.calculate_req_stats("total_wait_requests")
 
