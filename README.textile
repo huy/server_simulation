@@ -28,23 +28,45 @@ according "normal distribution":http://en.wikipedia.org/wiki/Normal_distribution
  
 h2. Model's parameters
  
+Example of parameter's file
+
+bc.
+number_of_servers: 6
+number_request_per_sec: 30
+number_of_requests: 50000
+    types_of_requests:
+      dma:
+        output_capacity: 20
+        proportion: 0.05
+        avg_service_time_secs: 4.5
+        deviation_service_time_secs: 1.5
+      other:
+        output_capacity: 60
+        proportion: 0.95
+        avg_service_time_secs: 1.15
+        deviation_service_time_secs: 0.25
+
+The following parameters from the file will be used to drive generator of requests
+
 **request_type_distribution**
 
 An array of probability for each type of requests, sum must yield 1.0. 
 
-e.g. [0.5,0.5] decribes two types of requests, each has probability of 50%.
+e.g. [0.05,0.95] decribes two types of requests having probability of 5% and 95%.
 
 **request_type_mean_time**
 
 An array of mean time (expected value i.e. most of requests takes this time to complete) 
 for each type of requests, must have same length as request_type_distribution.
 
-e.g. [2.5,0.75] describes the average service time of first type of requests is 2.5 second
-and of second type is 750 ms.
+e.g. [4.5,1.15] describes the average service time of first type of requests is 4.5 second
+and of second type is 1.15 s.
 
 **deviation_service_time**
 
-This decribe a degree the service time spreads from mean time
+An array of variation time for each type of requests decribing a degree the service time spreads from mean time.
+
+e.g. [1.5,0.25] the service time of first type of requests will vary by 1.5 secs, for the second type will be 250 ms 
 
 **arrival_rate**
 
@@ -57,7 +79,7 @@ h2. Requirements
 * python version >= 2.4 
 * numpy and scipy python libaries
 
-h2. Runit
+h2. Run it
 
 **Test**
 
@@ -69,18 +91,3 @@ bc. python sim/simulation.py tests/sample1.yml
 
 p. where sample1.yml is file of parameters for simulation
 
-bc. 
-number_of_servers: 6
-number_request_per_sec: 30
-number_of_requests: 50000
-    types_of_requests:
-      dma:
-        output_capacity: 20
-        proportion: 0.05 
-        avg_service_time_secs: 4.5
-        deviation_service_time_secs: 1.5
-      other:
-        output_capacity: 60
-        proportion: 0.95 
-        avg_service_time_secs: 1.15    
-        deviation_service_time_secs: 0.25
