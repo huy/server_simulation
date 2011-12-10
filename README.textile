@@ -42,9 +42,9 @@ for each type of requests, must have same length as request_type_distribution.
 e.g. [2.5,0.75] describes the average service time of first type of requests is 2.5 second
 and of second type is 750 ms.
 
-**std_service_time_variance**
+**deviation_service_time**
 
-This decribe a degree the service time spreads from mean time, it is fixed to 1.0
+This decribe a degree the service time spreads from mean time
 
 **arrival_rate**
 
@@ -72,7 +72,9 @@ number_of_requests: 50000
         output_capacity: 20
         proportion: 0.05 
         avg_service_time_secs: 4.5
+        deviation_service_time_secs: 1.5
       other:
         output_capacity: 60
         proportion: 0.95 
         avg_service_time_secs: 1.15    
+        deviation_service_time_secs: 0.25
