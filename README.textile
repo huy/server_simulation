@@ -74,4 +74,5 @@ number_of_requests: 50000
       other:
         output_capacity: 60
         proportion: 0.95 
-        avg_service_time_secs: 1.15@     
+        avg_service_time_secs: 1.15
+@     
