@@ -59,8 +59,7 @@ h2. Requirements
 
 h2. Example
 
-bc.
-python simulation.py sample1.yml
+bc. python -m sim.simulation sample1.yml
 
 p. where sample1.yml is file of parameters for simulation
 
