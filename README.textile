@@ -12,7 +12,7 @@ Requests come to the loadbalancer randomly at specific rate. The loadbalancer el
 forward the request regardless of type of resource required to complete the request.
 
 A request take a time to complete during this short period it occupies the resource. If all resources of
-the servers are occupied then next incomming request has to wait until one of them become available.
+a server are occupied then next incomming request to this server has to wait until one of its resources become available.
 
 The objective is to calculate total wait time of requests as well as % of requests that has to wait for resource' availability.
 
