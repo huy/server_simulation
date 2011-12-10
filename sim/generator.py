@@ -13,7 +13,7 @@ class RequestGenerator:
     self.discrete_dist = scipy.stats.rv_discrete(name="discrete",
       values=(range(self.number_request_types),request_type_distribution))
     self.exponential_dist = scipy.stats.expon(scale=1.0/arrival_rate)
-    self.norm_dists = [scipy.stats.norm(loc=request_type_mean_time[z],scale=1.0) for z
+    self.norm_dists = [scipy.stats.norm(loc=request_type_mean_time[z],scale=request_type_mean_time[z]/2) for z
       in range(self.number_request_types)]
 
     self.cache_service_time = {}

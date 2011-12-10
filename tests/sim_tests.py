@@ -1,6 +1,7 @@
 import unittest
 import yaml
 import os
+
 from sim.server import *
 from sim.generator import *
 from sim.loadbalancer import *
@@ -46,6 +47,38 @@ class TestServer(unittest.TestCase):
 
      self.assertEqual(0,s.find_first_available_channel(request_type=1)[0])
      self.assertEqual(0.0,s.find_first_available_channel(request_type=1)[1])
+
+class TestGenerator(unittest.TestCase):
+  def test_generate_request(self):
+    generator = RequestGenerator([0.05,0.95],[2.5,0.75],30)
+      
+    num_type1,num_type2 = 0.0,0.0
+    total_time = 0.0
+    
+    num_type2_closed_to_mean = 0.0
+    delta = 0.3
+
+    for type,arrival_time,service_time in generator.generate(10000):
+      if type==0:
+        num_type1+=1
+      else:
+        num_type2+=1
+        if service_time > 0.75 - delta and service_time < 0.75 + delta:
+          num_type2_closed_to_mean+=1
+
+      total_time+=arrival_time
+
+    # assert below may fail but very unlikely, this is to make sure that generator 
+    # do the good job
+    self.assertTrue(num_type1>5) 
+    self.assertTrue(num_type2>9000)
+
+    actual_rate = 10000/total_time
+    self.assertTrue(actual_rate>25)
+    self.assertTrue(actual_rate<35)
+
+    print num_type2_closed_to_mean,num_type2
+    self.assertTrue((num_type2_closed_to_mean/num_type2) > 0.5)
 
 if __name__ == '__main__':
     unittest.main()
