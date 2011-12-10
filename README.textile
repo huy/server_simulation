@@ -59,9 +59,10 @@ h2. Requirements
 
 h2. Example
 
+bc.
 python simulation.py sample1.yml
 
-where sample1.yml is file of parameters for simulation
+p. where sample1.yml is file of parameters for simulation
 
 bc. 
 number_of_servers: 6
