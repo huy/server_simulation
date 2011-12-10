@@ -22,9 +22,9 @@ The generator of the simulation will generate a request as tuple of (request_typ
 satisfying the following constraints
 
 * requests arrive at the system with length of inter-arrival time as random number 
-distributed according http://en.wikipedia.org/wiki/Exponential_distribution
-* service time of each request (per request type) is a random number distributed 
-according http://en.wikipedia.org/wiki/Normal_distribution
+distributed according "exponential distribution":http://en.wikipedia.org/wiki/Exponential_distribution
+* service time of each request is a random number distributed 
+according "normal distribution":http://en.wikipedia.org/wiki/Normal_distribution
  
 h2. Model's parameters
  
