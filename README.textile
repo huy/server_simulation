@@ -18,7 +18,10 @@ The objective is to calculate total wait time of requests as well as % of reques
 
 h2. Generator of requests
 
-The generator of the simulation will generate a request as tuple of (request_type,inter_arrival_time,service_time)
+The simulation uses a generator to generate requests randomly, feeds generated request to the model that 
+simulate work of loadbalancer and servers in order to calculate wait time and other statistics.
+
+The generator will generate a request as tuple of (request_type,inter_arrival_time,service_time)
 satisfying the following constraints
 
 * requests arrive at the system with length of inter-arrival time as random number 
