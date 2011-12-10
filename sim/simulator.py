@@ -6,36 +6,36 @@ class Simulator:
 
   def __init__(self,params):
     number_of_servers=params["number_of_servers"]
-    request_type_capacity=[x["output_capacity"] for x in params["types_of_requests"].values()]
-    request_type_distribution=[x["proportion"] for x in params["types_of_requests"].values()]
-    request_type_mean_time=[x["avg_service_time_secs"] for x in params["types_of_requests"].values()]
+    type_capacity=[x["output_capacity"] for x in params["types_of_requests"].values()]
+    type_distribution=[x["proportion"] for x in params["types_of_requests"].values()]
+    type_mean_time=[x["avg_service_time_secs"] for x in params["types_of_requests"].values()]
 
     self.number_request_per_sec=params["number_request_per_sec"]
     self.number_of_requests = params["number_of_requests"]
-    self.number_request_types = len(request_type_distribution)
+    self.number_of_types = len(type_distribution)
 
-    self.generator = RequestGenerator(request_type_distribution,
-      request_type_mean_time,
+    self.generator = RequestGenerator(type_distribution,
+      type_mean_time,
       self.number_request_per_sec)
 
-    server_capacity = self.distribute_output_capacity(number_of_servers,request_type_capacity)
+    server_capacity = self.distribute_output_capacity(number_of_servers,type_capacity)
      
     #print "server capacity:", server_capacity
 
     servers = [Server(server_capacity[z]) for z in range(number_of_servers)]
     self.loadbalancer = LoadBalancer(servers)
   
-  def distribute_output_capacity(self,number_of_servers,request_type_capacity):
-    server_capacity = [[0 for z in range(self.number_request_types)]
+  def distribute_output_capacity(self,number_of_servers,type_capacity):
+    server_capacity = [[0 for z in range(self.number_of_types)]
       for server in range(number_of_servers)]
 
-    for z in range(self.number_request_types):
-      while (request_type_capacity[z]>0):
+    for z in range(self.number_of_types):
+      while (type_capacity[z]>0):
         for server in range(number_of_servers):
-          if request_type_capacity[z] <= 0:
+          if type_capacity[z] <= 0:
             break
           server_capacity[server][z]+=1
-          request_type_capacity[z]-=1
+          type_capacity[z]-=1
 
     return server_capacity
         
