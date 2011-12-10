@@ -11,8 +11,8 @@ In the model, requests are divided into different types according to a type of r
 Requests come to the loadbalancer randomly at specific rate. The loadbalancer elect one of server to
 forward the request regardless of type of resource required to complete the request.
 
-A request take a time to complete during this short period it occupies the resource if all resources of
-the servers are occupied then next incomming request has to wait until one resource of these resources become available.
+A request take a time to complete during this short period it occupies the resource. If all resources of
+the servers are occupied then next incomming request has to wait until one of them become available.
 
 The objective is to calculate total wait time of requests as well as % of requests that has to wait for resource' availability.
 
