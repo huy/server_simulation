@@ -47,3 +47,5 @@ class LoadBalancer:
   def total_wait_requests(self):
     return self.calculate_servers_stats(lambda s: s.total_wait_requests)
 
+  def total_service_time(self):
+    return self.calculate_servers_stats(lambda s: s.total_service_time)

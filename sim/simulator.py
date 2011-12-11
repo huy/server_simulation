@@ -36,6 +36,9 @@ class Simulator:
 
     return server_capacity
         
+  def total_service_time(self):
+    return self.loadbalancer.total_service_time()
+
   def total_wait_time(self):
     return self.loadbalancer.total_wait_time()
 
@@ -69,12 +72,12 @@ if __name__ == "__main__":
   params = yaml.load(input.read())
   input.close() 
   
-  simulator = Simulator(params)
+  sim = Simulator(params)
 
-  simulator.simulate()
+  sim.simulate()
 
-  print "requests:",simulator.total_requests(),[float(x)/simulator.number_of_requests for x in simulator.total_requests()]
-  print "wait requests:",simulator.total_wait_requests(),[float(x[0])/x[1] for x in zip(simulator.total_wait_requests(),simulator.total_requests()) ]
-  print "wait time:",simulator.total_wait_time()
+  print "requests per type:",sim.total_requests(),["%.02f %%" % (x*100.0/sim.number_of_requests) for x in sim.total_requests()]
+  print "wait requests per type:",sim.total_wait_requests(),["%.02f %%" % (x[0]*100.0/x[1]) for x in zip(sim.total_wait_requests(),sim.total_requests())]
+  print "wait time per type:",["%.02f" % x for x in sim.total_wait_time()],["%.02f %%" % (x[0]*100.0/x[1]) for x in zip(sim.total_wait_time(),sim.total_service_time())]
 
   exit(0)
