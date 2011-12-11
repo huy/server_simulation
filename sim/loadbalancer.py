@@ -25,32 +25,25 @@ class LoadBalancer:
         server = z
     return server
   
-  def output_capacities(self):
+  def calculate_req_stats(self,func):
     result=[]
     for server in self.servers:
-      for type, val in enumerate(server.output_capacities()):
+      for type, val in enumerate(func(server)):
         if type < len(result):
            result[type]+=val
         else:
            result.append(val)
     return result
 
-  def calculate_req_stats(self,attr):
-    result=[]
-    for server in self.servers:
-      for type, val in enumerate(getattr(server,attr)):
-        if type < len(result):
-           result[type]+=val
-        else:
-           result.append(val)
-    return result
+  def output_capacities(self):
+    return self.calculate_req_stats(lambda s: s.output_capacities())
 
   def total_requests(self):
-    return self.calculate_req_stats("total_requests")
+    return self.calculate_req_stats(lambda s: s.total_requests)
 
   def total_wait_time(self):
-    return self.calculate_req_stats("total_wait_time")
+    return self.calculate_req_stats(lambda s: s.total_wait_time)
 
   def total_wait_requests(self):
-    return self.calculate_req_stats("total_wait_requests")
+    return self.calculate_req_stats(lambda s: s.total_wait_requests)
 
