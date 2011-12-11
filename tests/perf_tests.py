@@ -1,12 +1,19 @@
+import unittest
+import time
 import scipy.stats
-from sys import argv,exit,stderr
 
-expon = scipy.stats.expon(scale=0.5)
+class TestGenerateRandomValues(unittest.TestCase):
 
-if len(argv) > 1:
-  cache_size = int(argv[1])
-else:
-  cache_size = 1
+  def generate_expon_rvs(self,size):
+    expon = scipy.stats.expon(scale=0.5)
+    start = time.time()
+    for i in range(50000/size):
+      expon.rvs(size)
+    return (time.time() - start)
+     
+  def test_generate_multivalues_will_be_faster(self):
+    self.assertTrue(self.generate_expon_rvs(1)>80*self.generate_expon_rvs(100))
 
-for i in range(50000/cache_size):
-  expon.rvs(size=cache_size)
+if __name__ == '__main__':
+    unittest.main()
+
