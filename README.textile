@@ -89,7 +89,10 @@ bc. python -m tests.sim_tests
 
 **Program**
 
-bc. python sim/simulation.py tests/sample1.yml
+bc. python sim/simulation.py tests/sample1.yml --number_of_servers=4
 
-p. where sample1.yml is file of parameters for simulation
+p. where 
+
+* sample1.yml is file of parameters for simulation
+* --number_of_servers is optional, that will overwrite the one in parameter's file
 

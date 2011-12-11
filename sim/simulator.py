@@ -36,6 +36,9 @@ class Simulator:
 
     return server_capacity
         
+  def number_of_servers(self):
+    return self.loadbalancer.number_of_servers()
+
   def total_service_time(self):
     return self.loadbalancer.total_service_time()
 
@@ -67,15 +70,22 @@ if __name__ == "__main__":
     print >> stderr,"Usage:\n\t%s parameters-file" % argv[0] 
     exit(1)
 
-  script,filename=argv
+  filename=argv[1]
   input = open(filename) 
   params = yaml.load(input.read())
   input.close() 
   
+  for arg in argv[2:]:
+    if arg.startswith("--number_of_servers="):
+      name,val=arg.split("=")
+      #print "change",name[2:],"to",val
+      params[name[2:]]=int(val)
+       
   sim = Simulator(params)
 
   sim.simulate()
 
+  print "number of servers:",sim.number_of_servers()
   print "requests per type:",sim.total_requests(),["%.02f %%" % (x*100.0/sim.number_of_requests) for x in sim.total_requests()]
   print "wait requests per type:",sim.total_wait_requests(),["%.02f %%" % (x[0]*100.0/x[1]) for x in zip(sim.total_wait_requests(),sim.total_requests())]
   print "wait time per type:",["%.02f" % x for x in sim.total_wait_time()],["%.02f %%" % (x[0]*100.0/x[1]) for x in zip(sim.total_wait_time(),sim.total_service_time())]
