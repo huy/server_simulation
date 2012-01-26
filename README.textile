@@ -89,7 +89,7 @@ bc. python -m tests.sim_tests
 
 **Program**
 
-bc. python sim/simulation.py tests/sample1.yml --number_of_servers=4
+bc. python sim/simulator.py tests/sample1.yaml --number_of_servers=4
 
 p. where 
 

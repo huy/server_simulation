@@ -3,7 +3,7 @@ class Server:
     self.channels = []
     for n in output_capacities:
       self.channels.append([0 for z in range(n)])
-    self.total_requests = [0 for z in range(len(output_capacities))]
+    self.number_of_requests_per_type = [0 for z in range(len(output_capacities))]
     self.total_service_time = [0 for z in range(len(output_capacities))]
     self.total_wait_time = [0 for z in range(len(output_capacities))]
     self.total_wait_requests = [0 for z in range(len(output_capacities))]
@@ -12,7 +12,7 @@ class Server:
     return [len(x) for x in self.channels]    
 
   def process(self,request_type,arrival_time,service_time):
-    self.total_requests[request_type] += 1
+    self.number_of_requests_per_type[request_type] += 1
     self.total_service_time[request_type] += service_time
 
     available_channel, available_from = self.find_first_available_channel(request_type)
@@ -32,4 +32,6 @@ class Server:
     #print "--- assign %d to %d at %f" % (request_type,channel,assign_at)
     self.channels[request_type][channel] = assign_at + service_time
 
-
+  def total_requests(self):
+    return sum(self.number_of_requests_per_type)
+  

@@ -18,10 +18,10 @@ class LoadBalancer:
     self.elect_server().process(request_type,self.arrival_time,service_time)
 
   def elect_server(self):
-    server,min = self.servers[0],self.servers[0].total_requests
+    server,min = self.servers[0],self.servers[0].total_requests()
     for z in self.servers:
-      if z.total_requests < min:
-        min = z.total_requests
+      if z.total_requests() < min:
+        min = z.total_requests()
         server = z
     return server
   
@@ -38,8 +38,8 @@ class LoadBalancer:
   def output_capacities(self):
     return self.calculate_servers_stats(lambda s: s.output_capacities())
 
-  def total_requests(self):
-    return self.calculate_servers_stats(lambda s: s.total_requests)
+  def number_of_requests_per_type(self):
+    return self.calculate_servers_stats(lambda s: s.number_of_requests_per_type)
 
   def total_wait_time(self):
     return self.calculate_servers_stats(lambda s: s.total_wait_time)
