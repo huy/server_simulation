@@ -51,13 +51,17 @@ class Simulator:
   def number_of_requests_per_type(self):
     return self.loadbalancer.number_of_requests_per_type()
 
+  def number_of_failed_requests_per_type(self):
+    return self.loadbalancer.number_of_failed_requests_per_type()
+
   def simulate(self):
     arrival_time = 0
     reqno = 0
     while True:     
        for req in self.generator.generate(number_of_requests=100):
          reqno += 1
-         self.loadbalancer.process(req)
+         arrival_time += req[1]
+         self.loadbalancer.process(req,arrival_time)
 
        if  reqno >=self.number_of_requests:
           break
@@ -67,7 +71,7 @@ if __name__ == "__main__":
   import yaml
   
   if len(argv) < 2:
-    print >> stderr,"Usage:\n\t%s parameters-file" % argv[0] 
+    print >> stderr,"Usage:\n\t%s parameters-file [--number_of_servers=2] [--number_of_requests=50000]" % argv[0] 
     exit(1)
 
   filename=argv[1]
@@ -76,10 +80,10 @@ if __name__ == "__main__":
   input.close() 
   
   for arg in argv[2:]:
-    if arg.startswith("--number_of_servers="):
-      name,val=arg.split("=")
-      #print "change",name[2:],"to",val
-      params[name[2:]]=int(val)
+    for option in ("--number_of_servers=","--number_of_requests="):
+      if arg.startswith(option):
+        name,val=arg.split("=")
+        params[name[2:]]=int(val)
        
   sim = Simulator(params)
 
@@ -87,6 +91,7 @@ if __name__ == "__main__":
 
   print "number of servers:",sim.number_of_servers()
   print "requests per type:",sim.number_of_requests_per_type(),["%.02f %%" % (x*100.0/sim.number_of_requests) for x in sim.number_of_requests_per_type()]
+  print "failed requests per type:",sim.number_of_failed_requests_per_type(),["%.02f %%" % (x[0]*100.0/x[1]) for x in zip(sim.number_of_failed_requests_per_type(),sim.number_of_requests_per_type())]
   print "wait requests per type:",sim.total_wait_requests(),["%.02f %%" % (x[0]*100.0/x[1]) for x in zip(sim.total_wait_requests(),sim.number_of_requests_per_type())]
   print "wait time per type:",["%.02f" % x for x in sim.total_wait_time()],["%.02f %%" % (x[0]*100.0/x[1]) for x in zip(sim.total_wait_time(),sim.total_service_time())]
 

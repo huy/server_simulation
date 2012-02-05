@@ -4,7 +4,6 @@ class LoadBalancer:
 
   def __init__(self,servers):
     self.servers = servers
-    self.arrival_time = 0
 
   def number_of_servers(self):
     return len(self.servers)
@@ -12,10 +11,9 @@ class LoadBalancer:
   def server(self,index):
     return self.servers[index]
 
-  def process(self,req):
+  def process(self,req,arrival_time):
     request_type,delay,service_time = req
-    self.arrival_time = self.arrival_time + delay
-    self.elect_server().process(request_type,self.arrival_time,service_time)
+    self.elect_server().process(request_type,arrival_time,service_time)
 
   def elect_server(self):
     server,min = self.servers[0],self.servers[0].total_requests()
@@ -40,6 +38,9 @@ class LoadBalancer:
 
   def number_of_requests_per_type(self):
     return self.calculate_servers_stats(lambda s: s.number_of_requests_per_type)
+
+  def number_of_failed_requests_per_type(self):
+    return self.calculate_servers_stats(lambda s: s.total_failed_requests)
 
   def total_wait_time(self):
     return self.calculate_servers_stats(lambda s: s.total_wait_time)

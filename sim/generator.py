@@ -25,9 +25,9 @@ class RequestGenerator:
 
   def generate(self,number_of_requests):
     request_type_arr = self.discrete_dist.rvs(size=number_of_requests)
-    delay_arr = self.exponential_dist.rvs(size=number_of_requests)
+    time_from_prev_arr = self.exponential_dist.rvs(size=number_of_requests)
     service_time_arr = self.generate_service_time(request_type_arr)
-    return zip(request_type_arr,delay_arr,service_time_arr)
+    return zip(request_type_arr,time_from_prev_arr,service_time_arr)
 
   def generate_service_time(self,request_type_arr):
     return [self.guess_service_time(z) for z in request_type_arr]

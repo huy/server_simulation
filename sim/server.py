@@ -7,6 +7,7 @@ class Server:
     self.total_service_time = [0 for z in range(len(output_capacities))]
     self.total_wait_time = [0 for z in range(len(output_capacities))]
     self.total_wait_requests = [0 for z in range(len(output_capacities))]
+    self.total_failed_requests = [0 for z in range(len(output_capacities))]
 
   def output_capacities(self):
     return [len(x) for x in self.channels]    
@@ -15,14 +16,17 @@ class Server:
     self.number_of_requests_per_type[request_type] += 1
     self.total_service_time[request_type] += service_time
 
-    available_channel, available_from = self.find_first_available_channel(request_type)
-    if arrival_time >= available_from:
-      self.assign_request_to_channel(request_type,available_channel,arrival_time,service_time)
+    if len(self.channels[request_type]) == 0:
+      self.total_failed_requests[request_type] += 1
     else:
-      #print "--- %s wait for %f" % (request_type,(available_from - arrival_time))
-      self.total_wait_time[request_type] += (available_from - arrival_time)
-      self.total_wait_requests[request_type] +=1
-      self.assign_request_to_channel(request_type,available_channel,available_from,service_time)
+      available_channel, available_from = self.find_first_available_channel(request_type)
+      if arrival_time >= available_from:
+        self.assign_request_to_channel(request_type,available_channel,arrival_time,service_time)
+      else:
+        #print "--- %s wait for %f" % (request_type,(available_from - arrival_time))
+        self.total_wait_time[request_type] += (available_from - arrival_time)
+        self.total_wait_requests[request_type] +=1
+        self.assign_request_to_channel(request_type,available_channel,available_from,service_time)
 
   def find_first_available_channel(self,request_type):
     first_available_at = min(self.channels[request_type])
