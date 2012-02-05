@@ -13,6 +13,7 @@ class Server:
     return [len(x) for x in self.channels]    
 
   def process(self,request_type,arrival_time,service_time):
+
     self.number_of_requests_per_type[request_type] += 1
     self.total_service_time[request_type] += service_time
 

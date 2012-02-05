@@ -15,6 +15,7 @@ class RequestGenerator:
 
     self.discrete_dist = scipy.stats.rv_discrete(name="discrete",
       values=(range(self.number_request_types),request_type_distribution))
+    #print "expon scale = %f" % (1.0/arrival_rate)
     self.exponential_dist = scipy.stats.expon(scale=1.0/arrival_rate)
     self.norm_dists = [scipy.stats.norm(loc=request_type_mean[z],scale=request_type_std_deviation[z]) for z
       in range(self.number_request_types)]

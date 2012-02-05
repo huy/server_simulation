@@ -1,3 +1,4 @@
+from pprint import PrettyPrinter
 from server import Server
 from loadbalancer import LoadBalancer
 from generator import RequestGenerator
@@ -7,12 +8,11 @@ class Simulator:
   def __init__(self,params):
     number_of_servers=params["number_of_servers"]
 
-    self.number_request_per_sec = params["number_request_per_sec"]
     self.number_of_requests = params["number_of_requests"]
     self.number_of_types = len(params["types_of_requests"])
 
-    self.generator = RequestGenerator(params["types_of_requests"],
-      self.number_request_per_sec)
+    self.number_of_requests_per_sec = params["number_of_requests_per_sec"]
+    self.generator = RequestGenerator(params["types_of_requests"],params["number_of_requests_per_sec"])
 
     request_type_capacity=[x["output_capacity"] for x in params["types_of_requests"].values()]
     server_capacity = self.distribute_output_capacity(number_of_servers,request_type_capacity)
@@ -61,6 +61,8 @@ class Simulator:
        for req in self.generator.generate(number_of_requests=100):
          reqno += 1
          arrival_time += req[1]
+
+         #print "--- %s arrive at %f" % (req[0],arrival_time)
          self.loadbalancer.process(req,arrival_time)
 
        if  reqno >=self.number_of_requests:
@@ -71,7 +73,7 @@ if __name__ == "__main__":
   import yaml
   
   if len(argv) < 2:
-    print >> stderr,"Usage:\n\t%s parameters-file [--number_of_servers=2] [--number_of_requests=50000]" % argv[0] 
+    print >> stderr,"Usage:\n\t%s parameters-file [--number_of_servers=2] [--number_of_requests=50000] [--number_of_requests_per_sec=30]" % argv[0] 
     exit(1)
 
   filename=argv[1]
@@ -80,14 +82,19 @@ if __name__ == "__main__":
   input.close() 
   
   for arg in argv[2:]:
-    for option in ("--number_of_servers=","--number_of_requests="):
+    for option in ("--number_of_servers=","--number_of_requests=","--number_of_requests_per_sec="):
       if arg.startswith(option):
         name,val=arg.split("=")
         params[name[2:]]=int(val)
        
+  print >> stderr, "--- simulation's parameters"
+  PrettyPrinter().pprint(params)
+
   sim = Simulator(params)
 
   sim.simulate()
+
+  print >> stderr, "--- result"
 
   print "number of servers:",sim.number_of_servers()
   print "requests per type:",sim.number_of_requests_per_type(),["%.02f %%" % (x*100.0/sim.number_of_requests) for x in sim.number_of_requests_per_type()]

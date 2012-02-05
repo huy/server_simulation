@@ -15,7 +15,7 @@ class TestLoadParameters(unittest.TestCase):
   def test_load_parameters(self):
     self.assertEqual(6,self.lb.number_of_servers())
 
-    self.assertEqual(30,self.simulator.number_request_per_sec)
+    self.assertEqual(30,self.simulator.number_of_requests_per_sec)
     self.assertEqual(50000,self.simulator.number_of_requests)
 
   def test_distribute_output_capacity(self):

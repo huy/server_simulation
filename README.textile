@@ -89,11 +89,12 @@ bc. python -m tests.sim_tests
 
 **Program**
 
-bc. python sim/simulator.py tests/sample1.yaml --number_of_servers=4 --number_of_requests=20000
+bc. python sim/simulator.py tests/sample1.yaml --number_of_servers=4 --number_of_requests=20000 --number_of_requests_per_sec=20
 
 p. where 
 
 * sample1.yml is file of parameters for simulation
 * --number_of_servers is optional, that will overwrite the one in parameter's file
 * --number_of_requests is optional, that will overwrite the one in parameter's file
+* --number_of_requests_per_sec is optional, that will overwrite the one in parameter's file
 
