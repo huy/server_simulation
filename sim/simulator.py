@@ -60,10 +60,11 @@ class Simulator:
     while True:     
        for req in self.generator.generate(number_of_requests=100):
          reqno += 1
-         arrival_time += req[1]
+         request_type,delay,service_time=req
+         arrival_time += delay
 
-         #print "--- %s arrive at %f" % (req[0],arrival_time)
-         self.loadbalancer.process(req,arrival_time)
+         #print "--- %s arrive at %f" % (request_type,arrival_time)
+         self.loadbalancer.process(request_type,arrival_time,service_time)
 
        if  reqno >=self.number_of_requests:
           break

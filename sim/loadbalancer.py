@@ -12,8 +12,7 @@ class LoadBalancer:
   def server(self,index):
     return self.servers[index]
 
-  def process(self,req,arrival_time):
-    request_type,delay,service_time = req
+  def process(self,request_type,arrival_time,service_time):
     self.elect_server(arrival_time).process(request_type,arrival_time,service_time)
 
   def elect_server(self,arrival_time):
@@ -21,23 +20,22 @@ class LoadBalancer:
        return self.elect_server_by_roundrobin()
     if self.method == "busyness":
        return self.elect_server_by_busyness(arrival_time)
-    raise Exception("unknown balancer method %s" % self.method)
+    raise Exception("unknown balancer method '%s'" % self.method)
     
-  def elect_server_by_roundrobin(self):
-    server,min = self.servers[0],self.servers[0].total_requests()
+  def elect_server_with_min(self,func):
+    server,min = self.servers[0],func(self.servers[0])
     for z in self.servers:
-      if z.total_requests() < min:
-        min = z.total_requests()
+      current = func(z)
+      if current < min:
+        min = current
         server = z
     return server
 
+  def elect_server_by_roundrobin(self):
+    return self.elect_server_with_min(lambda s: s.total_requests())
+
   def elect_server_by_busyness(self,arrival_time):
-    server,min = self.servers[0],self.servers[0].number_of_pending_requests(arrival_time)
-    for z in self.servers:
-      if z.number_of_pending_requests(arrival_time) < min:
-        min = z.number_of_pending_requests(arrival_time)
-        server = z
-    return server
+    return self.elect_server_with_min(lambda s: s.number_of_pending_requests(arrival_time))
 
   def calculate_servers_stats(self,func):
     result=[]
