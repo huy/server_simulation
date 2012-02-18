@@ -6,12 +6,12 @@ from generator import RequestGenerator
 class Simulator:
 
   def __init__(self,params):
-    number_of_servers=params["number_of_servers"]
+    number_of_servers=int(params["number_of_servers"])
 
-    self.number_of_requests = params["number_of_requests"]
+    self.number_of_requests = int(params["number_of_requests"])
     self.number_of_types = len(params["types_of_requests"])
 
-    self.number_of_requests_per_sec = params["number_of_requests_per_sec"]
+    self.number_of_requests_per_sec = int(params["number_of_requests_per_sec"])
     self.generator = RequestGenerator(params["types_of_requests"],params["number_of_requests_per_sec"])
 
     request_type_capacity=[x["output_capacity"] for x in params["types_of_requests"].values()]
@@ -20,7 +20,7 @@ class Simulator:
     #print "server capacity:", server_capacity
 
     servers = [Server(server_capacity[z]) for z in range(number_of_servers)]
-    self.loadbalancer = LoadBalancer(servers)
+    self.loadbalancer = LoadBalancer(servers=servers,method=params["method"])
   
   def distribute_output_capacity(self,number_of_servers,type_capacity):
     server_capacity = [[0 for z in range(self.number_of_types)]
@@ -82,10 +82,10 @@ if __name__ == "__main__":
   input.close() 
   
   for arg in argv[2:]:
-    for option in ("--number_of_servers=","--number_of_requests=","--number_of_requests_per_sec="):
+    for option in ("--number_of_servers=","--number_of_requests=","--number_of_requests_per_sec=","--method="):
       if arg.startswith(option):
         name,val=arg.split("=")
-        params[name[2:]]=int(val)
+        params[name[2:]]=val
        
   print >> stderr, "--- simulation's parameters"
   PrettyPrinter().pprint(params)

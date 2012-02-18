@@ -37,6 +37,8 @@ class Server:
     #print "--- assign %d to %d at %f" % (request_type,channel,assign_at)
     self.channels[request_type][channel] = assign_at + service_time
 
+  def number_of_pending_requests(self,at):
+    return sum([len([r for r in ch if r > at]) for ch in self.channels])
+
   def total_requests(self):
     return sum(self.number_of_requests_per_type)
-  

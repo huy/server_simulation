@@ -2,8 +2,9 @@ from server import Server
 
 class LoadBalancer:
 
-  def __init__(self,servers):
+  def __init__(self,servers,method="roundrobin"):
     self.servers = servers
+    self.method = method
 
   def number_of_servers(self):
     return len(self.servers)
@@ -13,16 +14,31 @@ class LoadBalancer:
 
   def process(self,req,arrival_time):
     request_type,delay,service_time = req
-    self.elect_server().process(request_type,arrival_time,service_time)
+    self.elect_server(arrival_time).process(request_type,arrival_time,service_time)
 
-  def elect_server(self):
+  def elect_server(self,arrival_time):
+    if self.method == "roundrobin":
+       return self.elect_server_by_roundrobin()
+    if self.method == "busyness":
+       return self.elect_server_by_busyness(arrival_time)
+    raise Exception("unknown balancer method %s" % self.method)
+    
+  def elect_server_by_roundrobin(self):
     server,min = self.servers[0],self.servers[0].total_requests()
     for z in self.servers:
       if z.total_requests() < min:
         min = z.total_requests()
         server = z
     return server
-  
+
+  def elect_server_by_busyness(self,arrival_time):
+    server,min = self.servers[0],self.servers[0].number_of_pending_requests(arrival_time)
+    for z in self.servers:
+      if z.number_of_pending_requests(arrival_time) < min:
+        min = z.number_of_pending_requests(arrival_time)
+        server = z
+    return server
+
   def calculate_servers_stats(self,func):
     result=[]
     for server in self.servers:
