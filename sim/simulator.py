@@ -96,7 +96,7 @@ if __name__ == "__main__":
 
   print >> stderr, "--- result"
 
-  print "number of servers:",sim.number_of_servers()
+  print "requests per server:",sim.number_of_servers(),[sim.loadbalancer.server(i).total_requests() for i in range(sim.number_of_servers())]
   print "requests per type:",sim.number_of_requests_per_type(),["%.02f %%" % (x*100.0/sim.number_of_requests) for x in sim.number_of_requests_per_type()]
   print "failed requests per type:",sim.number_of_failed_requests_per_type(),["%.02f %%" % (x[0]*100.0/x[1]) for x in zip(sim.number_of_failed_requests_per_type(),sim.number_of_requests_per_type())]
   print "wait requests per type:",sim.total_wait_requests(),["%.02f %%" % (x[0]*100.0/x[1]) for x in zip(sim.total_wait_requests(),sim.number_of_requests_per_type())]
