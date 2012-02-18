@@ -1,6 +1,7 @@
 number_of_servers: 6
 number_of_requests_per_sec: 30
 number_of_requests: 50000
+method: roundrobin
 types_of_requests:
   dma:
     output_capacity: 20

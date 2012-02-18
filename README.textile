@@ -89,7 +89,7 @@ bc. python -m tests.sim_tests
 
 **Program**
 
-bc. python sim/simulator.py tests/sample1.yaml --number_of_servers=4 --number_of_requests=20000 --number_of_requests_per_sec=20
+bc. python sim/simulator.py tests/sample1.yaml --number_of_servers=4 --number_of_requests=20000 --number_of_requests_per_sec=20 --method=busyness
 
 p. where 
 
@@ -97,4 +97,5 @@ p. where
 * --number_of_servers is optional, that will overwrite the one in parameter's file
 * --number_of_requests is optional, that will overwrite the one in parameter's file
 * --number_of_requests_per_sec is optional, that will overwrite the one in parameter's file
+* --method is load balancer methods, which can be 'roundrobin' or 'busyness', is optional and will overwrite the one in parameter's file
 
