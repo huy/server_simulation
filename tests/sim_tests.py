@@ -34,7 +34,7 @@ class TestLoadBalancer(unittest.TestCase):
      s2.total_number_requests=109
 
      lb = LoadBalancer(servers=[s1,s2])
-     self.assertEqual(s1,lb.elect_server())
+     self.assertEqual(s1,lb.elect_server(0))
 
 class TestServer(unittest.TestCase):
   def test_find_first_available_channel(self):
