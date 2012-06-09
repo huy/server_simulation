@@ -6,9 +6,9 @@ class RequestGenerator:
     types_of_requests,
     arrival_rate):
 
-    request_type_distribution=[x["proportion"] for x in types_of_requests.values()]
-    request_type_mean=[x["avg_service_time_secs"] for x in types_of_requests.values()]
-    request_type_std_deviation=[x["deviation_service_time_secs"] for x in types_of_requests.values()]
+    request_type_distribution=[float(x["proportion"]) for x in types_of_requests.values()]
+    request_type_mean=[float(x["avg_service_time_secs"]) for x in types_of_requests.values()]
+    request_type_std_deviation=[float(x["deviation_service_time_secs"]) for x in types_of_requests.values()]
 
     self.number_request_types = len(types_of_requests)
     self.arrival_time = 0
