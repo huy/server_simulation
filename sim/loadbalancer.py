@@ -51,16 +51,16 @@ class LoadBalancer:
     return self.calculate_servers_stats(lambda s: s.output_capacities())
 
   def number_of_requests_per_type(self):
-    return self.calculate_servers_stats(lambda s: s.number_of_requests_per_type)
+    return self.calculate_servers_stats(lambda s: s.stats["number_of_requests_per_type"])
 
   def number_of_failed_requests_per_type(self):
-    return self.calculate_servers_stats(lambda s: s.total_failed_requests)
+    return self.calculate_servers_stats(lambda s: s.stats["total_failed_requests"])
 
   def total_wait_time(self):
-    return self.calculate_servers_stats(lambda s: s.total_wait_time)
+    return self.calculate_servers_stats(lambda s: s.stats["total_wait_time"])
 
   def total_wait_requests(self):
-    return self.calculate_servers_stats(lambda s: s.total_wait_requests)
+    return self.calculate_servers_stats(lambda s: s.stats["total_wait_requests"])
 
   def total_service_time(self):
-    return self.calculate_servers_stats(lambda s: s.total_service_time)
+    return self.calculate_servers_stats(lambda s: s.stats["total_service_time"])

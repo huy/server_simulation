@@ -12,7 +12,7 @@ class Simulator:
     self.number_of_types = len(params["types_of_requests"])
 
     self.number_of_requests_per_sec = int(params["number_of_requests_per_sec"])
-    self.generator = RequestGenerator(params["types_of_requests"],params["number_of_requests_per_sec"])
+    self.generator = RequestGenerator(params["types_of_requests"],int(params["number_of_requests_per_sec"]))
 
     request_type_capacity=[x["output_capacity"] for x in params["types_of_requests"].values()]
     server_capacity = self.distribute_output_capacity(number_of_servers,request_type_capacity)
