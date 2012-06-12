@@ -1,13 +1,12 @@
+import glob
 import os
 
 total=0
-for top, dirs, files in os.walk('./'):
-  for name in files:       
-    if os.path.splitext(name)[1] in [".py",".textile",".yaml"]:
-      fullpath=os.path.join(top, name)
-      with open(fullpath) as f:
-        fl = sum([1 for line in f])
-      total = total + fl
-      print fullpath,fl
+for name in glob.glob('./**/*'):
+  if os.path.splitext(name)[1] in [".py",".textile",".yaml"]:
+    with open(name) as f:
+      nlines = sum([1 for line in f])
+    total = total + nlines
+    print name,nlines
 
 print "toltal number if lines=",total
