@@ -39,7 +39,3 @@ class RequestGenerator:
        [z for z in self.norm_dists[request_type].rvs(size=100) if z > 0.0])
 
     return self.cache_service_time[request_type].popleft()
-
-if __name__ == "__main__":
-  generator = RequestGenerator([0.05,0.95],[2.5,0.75],30)
-  print generator.generate(10)
